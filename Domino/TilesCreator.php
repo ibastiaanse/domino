@@ -6,9 +6,9 @@ namespace Domino;
 class TilesCreator
 {
     /**
-     * @var array
+     * @var string[]
      */
-    private $endings = [
+    private $possibleEndings = [
         0 => ' ',
         1 => '1',
         2 => '2',
@@ -30,7 +30,7 @@ class TilesCreator
 
     public function createNewSet(): Tiles
     {
-        foreach ($this->endings as $valueA => $sideA) {
+        foreach ($this->possibleEndings as $valueA => $sideA) {
             $this->addTile($valueA, $sideA);
         }
 
@@ -39,7 +39,7 @@ class TilesCreator
 
     private function addTile(int $valueA, string $sideA): void
     {
-        foreach ($this->endings as $valueB => $sideB) {
+        foreach ($this->possibleEndings as $valueB => $sideB) {
             if ($valueA > $valueB) {
                 continue;
             }

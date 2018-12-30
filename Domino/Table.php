@@ -30,7 +30,7 @@ class Table
         $this->tiles = $tiles;
     }
 
-    public function placeStartTile(Tile $startTile)
+    public function placeStartTile(Tile $startTile): void
     {
         $startTile->addColor($this->startTileColor);
 
@@ -68,13 +68,13 @@ class Table
         }
     }
 
-    public function layTileLeft(Tile $tile): void
+    private function layTileLeft(Tile $tile): void
     {
         $this->tiles->addTile($tile, 'start');
         $this->availableLeft = $tile->getSideA();
     }
 
-    public function layTileRight(Tile $tile): void
+    private function layTileRight(Tile $tile): void
     {
         $this->tiles->addTile($tile, 'end');
         $this->availableRight = $tile->getSideB();

@@ -46,14 +46,6 @@ class Tile
         return $this->sideB;
     }
 
-    public function getSides(): array
-    {
-        return [
-            $this->sideA,
-            $this->sideB,
-        ];
-    }
-
     public function turnTile(): void
     {
         $sideA = $this->sideA;
@@ -63,16 +55,9 @@ class Tile
         $this->sideB = $sideA;
     }
 
-    public function availableSide(): array
-    {
-        return $this->availableSide;
-    }
-
-    public function addColor(string $color): self
+    public function addColor(string $color): void
     {
         $this->color = $color;
-
-        return $this;
     }
 
     public function __toString(): string

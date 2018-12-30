@@ -30,31 +30,29 @@ class Player
      */
     private $defaultColor = "\e[39;0m";
 
-    public function __construct(string $name, Tiles $tiles, string $color)
+    /**
+     * @var Tiles
+     */
+    private $tileStock;
+
+    public function __construct(string $name, Tiles $tiles, string $color, Tiles $tileStock)
     {
         $this->name = $name;
         $this->tiles = $tiles;
         $this->color = $color;
+        $this->tileStock = $tileStock;
     }
 
-    public function pickTile(Tile $tile)
+    public function pickStartTiles()
     {
-        $this->tiles->addTile($tile->addColor($this->color));
-    }
-
-    public function showTiles(): string
-    {
-        return $this->tiles->showTiles();
-    }
-
-    public function notEnoughStartTiles(): bool
-    {
-        return $this->tiles->getAmountOfTiles() < $this->startAmount;
+        while ($this->notEnoughStartTiles()) {
+            $this->pickTileFromStock();
+        }
     }
 
     public function hasTilesLeft(): bool
     {
-        return $this->tiles->getAmountOfTiles() > 0;
+        return $this->tiles->hasTilesLeft();
     }
 
     public function getMatchingTile(array $availableSides): ?Tile
@@ -89,21 +87,22 @@ class Player
         return false;
     }
 
-    public function pickTileFromStock(Tiles $tiles)
+    public function pickTileFromStock(): void
     {
-        $tile = $tiles->getRandomTile();
+        $tile = $this->tileStock->getRandomTile();
+
         $tile->addColor($this->color);
 
         $this->tiles->addTile($tile);
     }
 
-    public function placeTile(): Tile
-    {
-        return $this->tiles->getRandomTile()->addColor($this->color);
-    }
-
-    public function __toString()
+    public function __toString(): string
     {
         return $this->color . $this->name . $this->defaultColor;
+    }
+
+    private function notEnoughStartTiles(): bool
+    {
+        return $this->tiles->getAmountOfTiles() < $this->startAmount;
     }
 }
